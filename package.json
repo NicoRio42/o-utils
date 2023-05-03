@@ -1,6 +1,6 @@
 {
   "name": "orienteering-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Utils for managing orienteering related data in javascript",
   "main": "index.js",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "exports": {
     "./package.json": "./package.json",
-    ".": "./dist/*.js"
+    "./split-times": "./dist/split-times/index.js"
   },
   "types": "types/*.js",
   "type": "module",
