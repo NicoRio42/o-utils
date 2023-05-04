@@ -1,11 +1,9 @@
 import type { MapCalibration } from "../models/course-map.js";
 import type { Map } from "../models/loggator-api/logator-event.js";
 
-export const cachedImageElements: Record<string, HTMLImageElement> = {};
-
-export async function getMapCallibrationFromLoggatorEventMap(
+export function getMapCallibrationFromLoggatorEventMap(
   loggatorEventMap: Map
-): Promise<MapCalibration> {
+): [Promise<MapCalibration>, HTMLImageElement] {
   let resolve: Function;
   let reject: Function;
 
@@ -15,9 +13,6 @@ export async function getMapCallibrationFromLoggatorEventMap(
   });
 
   const image = new Image();
-  // We cache the image element so openlayers can reuse it when loading the map
-  // (it prevents the image from being fetched twice)
-  cachedImageElements[loggatorEventMap.url] = image;
 
   image.onload = () => {
     resolve([
@@ -48,5 +43,5 @@ export async function getMapCallibrationFromLoggatorEventMap(
   image.onerror = () => reject("Failed to load map image");
   image.src = loggatorEventMap.url;
 
-  return promise;
+  return [promise, image];
 }

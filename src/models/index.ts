@@ -74,4 +74,8 @@ export {
   loggatorMapSchema,
   loggatorEventSchema,
 } from "./loggator-api/logator-event.js";
+export {
+  LoggatorPoints,
+  loggatorPointsValidator,
+} from "./loggator-api/loggator-points.js";
 export { isRunner, isNotNullRunnerLeg } from "./type-guards/runner-guards.js";

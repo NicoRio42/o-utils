@@ -1,6 +1,6 @@
 {
   "name": "orienteering-js",
-  "version": "0.0.8",
+  "version": "0.0.14",
   "description": "Utils for managing orienteering related data in javascript",
   "files": [
     "dist/",
@@ -51,6 +51,10 @@
     "./two-d-rerun": {
       "types": "./types/two-d-rerun/index.d.ts",
       "default": "./dist/two-d-rerun/index.js"
+    },
+    "./utils": {
+      "types": "./types/utils/index.d.ts",
+      "default": "./dist/utils/index.js"
     }
   },
   "author": "Nicolas Rio",
