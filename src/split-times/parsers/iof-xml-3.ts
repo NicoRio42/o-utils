@@ -1,9 +1,9 @@
-import type Runner from "../../models/runner.js";
-import RunnerStatusEnum from "../../models/enums/runner-status-enum.js";
+import type { Runner } from "../../models/runner.js";
+import { RunnerStatusEnum } from "../../models/enums/runner-status-enum.js";
 import { EMPTY_RUNNER_LEG, type RunnerLeg } from "../../models/runner-leg.js";
-import { isRunner } from "../../type-guards/runner-guards.js";
+import { isRunner } from "../../models/type-guards/runner-guards.js";
 import { extractNumberFromElementOrThrowError } from "../utils/xml-parser-utils.js";
-import computeSplitsRanksMistakes from "./compute-splits-ranks-mistakes.js";
+import { computeSplitsRanksMistakes } from "./compute-splits-ranks-mistakes.js";
 
 export function parseIOFXML3SplitTimesFile(
   xmlDocument: XMLDocument,

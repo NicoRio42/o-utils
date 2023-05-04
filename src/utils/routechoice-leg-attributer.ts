@@ -1,5 +1,5 @@
-import type Leg from "../models/leg.js";
-import type Routechoice from "../models/routechoice.js";
+import type { Leg } from "../models/leg.js";
+import type { Routechoice } from "../models/routechoice.js";
 import { distanceBetweenTwoGPSPoints } from "./distance-helpers.js";
 
 export function findRoutechoiceLegIndex(

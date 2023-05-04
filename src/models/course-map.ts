@@ -16,7 +16,7 @@ export const courseMapValidator = z.object({
   calibration: mapCalibrationValidator,
 });
 
-export default interface CourseMap {
+export interface CourseMap {
   url: string;
   calibration: MapCalibration;
 }
@@ -31,8 +31,3 @@ export type MapCalibration = [
   MapCalibrationPoint,
   MapCalibrationPoint
 ];
-
-export default interface CourseMap {
-  url: string;
-  calibration: MapCalibration;
-}

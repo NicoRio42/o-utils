@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type Routechoice from "./routechoice.js";
+import type { Routechoice } from "./routechoice.js";
 import {
   routechoiceValidator,
   type RoutechoiceWithSerializedTrack,
@@ -27,7 +27,7 @@ export interface LegWithoutRoutechoices {
   finishLon: number;
 }
 
-export default interface Leg extends LegWithoutRoutechoices {
+export interface Leg extends LegWithoutRoutechoices {
   routechoices: Routechoice[];
 }
 

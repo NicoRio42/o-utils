@@ -1,4 +1,4 @@
-export default interface SupermanSplit {
+export interface SupermanSplit {
   timeOverall: number;
   time: number;
 }

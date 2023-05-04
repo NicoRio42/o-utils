@@ -1,5 +1,5 @@
 import type { LoggatorEvent } from "../models/loggator-api/logator-event.js";
-import type Runner from "../models/runner.js";
+import type { Runner } from "../models/runner.js";
 
 export function buildRunnersTracksFromLoggatorData(
   inputRunners: Runner[],

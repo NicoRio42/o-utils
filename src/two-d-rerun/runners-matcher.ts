@@ -1,5 +1,5 @@
-import type { TwoDRerunRoute } from "../models/2d-rerun/mapviewer.js";
-import type Runner from "../models/runner.js";
+import type { TwoDRerunRoute } from "../models/index.js";
+import type { Runner } from "../models/runner.js";
 
 export function attribute2DRerunTrackToMatchedRunner(
   runners: Runner[],

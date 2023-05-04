@@ -1,35 +1,38 @@
 import { z } from "zod";
 
-export interface Map {
+export interface TwoDRerunMap {
   imagelink: string;
   width: string;
   height: string;
   calstring: string;
 }
 
-export interface Route {
-  unit: string;
+export interface TwoDRerunRoute {
+  indexnumber: number;
   runnername: string;
-  lats: string;
-  lngs: string;
-  times: string;
-  starttime: string;
+  latarray: number[];
+  lngarray: number[];
+  timearray: number[];
+  splits: { index: number | null }[];
+  zerotime: number;
+  manualsplits: number;
+  unit: string;
 }
 
-export interface Rerun2DEventData {
+export interface TwoDRerunEventData {
   status: string;
-  map: Map;
-  routes: Route[];
+  map: TwoDRerunMap;
+  routes: TwoDRerunRoute[];
 }
 
-export const mapSchema = z.object({
+export const twoDRerunMapSchema = z.object({
   imagelink: z.string(),
   width: z.string(),
   height: z.string(),
   calstring: z.string(),
 });
 
-export const routeSchema = z.object({
+export const twoDRerunRouteSchema = z.object({
   unit: z.string(),
   runnername: z.string(),
   lats: z.string(),
@@ -38,8 +41,8 @@ export const routeSchema = z.object({
   starttime: z.string(),
 });
 
-export const rerun2DEventDataSchema = z.object({
+export const twoDRerunEventDataSchema = z.object({
   status: z.string(),
-  map: mapSchema,
-  routes: z.array(routeSchema),
+  map: twoDRerunMapSchema,
+  routes: z.array(twoDRerunRouteSchema),
 });

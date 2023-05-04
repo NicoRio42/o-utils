@@ -1,11 +1,11 @@
-import type Leg from "../../models/leg.js";
+import type { Leg } from "../../models/leg.js";
 import {
   distanceBetweenTwoGPSPoints,
   getLineStringLength,
 } from "../../utils/distance-helpers.js";
 import { names, routesColors } from "../utils/routechoices-names-colors.js";
 
-export default function parseGPXRoutechoicesOCADExport(
+export function parseGPXRoutechoicesOCADExport(
   routechoicesXmlDoc: XMLDocument,
   legs: Leg[]
 ): Leg[] {

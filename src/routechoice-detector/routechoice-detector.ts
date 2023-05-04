@@ -1,8 +1,8 @@
-import type Leg from "../models/leg.js";
-import type Routechoice from "../models/routechoice.js";
-import type Runner from "../models/runner.js";
+import type { Leg } from "../models/leg.js";
+import type { Routechoice } from "../models/routechoice.js";
+import type { Runner } from "../models/runner.js";
 import type { RunnerTrack } from "../models/runner.js";
-import { isNotNullRunnerLeg } from "../type-guards/runner-guards.js";
+import { isNotNullRunnerLeg } from "../models/type-guards/runner-guards.js";
 import { dotProduct, magnitude } from "../utils/distance-helpers.js";
 
 export function detectRunnersRoutechoices(

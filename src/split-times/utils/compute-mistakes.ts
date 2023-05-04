@@ -1,6 +1,6 @@
-import type Runner from "../../models/runner.js";
+import type { Runner } from "../../models/runner.js";
 import type { RunnerLeg } from "../../models/runner-leg.js";
-import type SupermanSplit from "../../models/superman.js";
+import type { SupermanSplit } from "../../models/superman.js";
 import { arrayAverage } from "./shared.js";
 
 export default function computeRunnersMistakes(

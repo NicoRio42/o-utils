@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type Routechoice from "./routechoice.js";
+import type { Routechoice } from "./routechoice.js";
 import { routechoiceValidator } from "./routechoice.js";
 
 export const runnerLegValidator = z.object({

@@ -1,13 +1,13 @@
 import { z } from "zod";
-import type Control from "./control.js";
+import type { Control } from "./control.js";
 import { controlSchema } from "./control.js";
-import type CourseMap from "./course-map.js";
+import type { CourseMap } from "./course-map.js";
 import { courseMapValidator } from "./course-map.js";
-import type Leg from "./leg.js";
+import type { Leg } from "./leg.js";
 import { legValidator, type LegWithSerializedNestedArrays } from "./leg.js";
-import type Runner from "./runner.js";
+import type { Runner } from "./runner.js";
 import { runnerValidator } from "./runner.js";
-import type Statistics from "./statistics.js";
+import type { Statistics } from "./statistics.js";
 import { statisticsValidator } from "./statistics.js";
 
 export const courseDataWithoutRunnersValidator = z.object({
@@ -39,6 +39,6 @@ export interface CourseDataWithoutRunners
   legs: Leg[];
 }
 
-export default interface CourseData extends CourseDataWithoutRunners {
+export interface CourseData extends CourseDataWithoutRunners {
   runners: Runner[];
 }

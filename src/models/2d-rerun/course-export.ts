@@ -1,6 +1,6 @@
-import type { Tag } from "./mapviewer.js";
+import type { TwoDRerunTag } from "./mapviewer.js";
 
 export interface TwoDRerunCourseExport {
-  tags: Tag[];
+  tags: TwoDRerunTag[];
   coursecoords: string[];
 }

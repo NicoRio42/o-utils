@@ -1,26 +1,56 @@
 {
   "name": "orienteering-js",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "Utils for managing orienteering related data in javascript",
-  "main": "index.js",
   "files": [
     "dist/",
     "types/"
   ],
-  "exports": {
-    "./package.json": "./package.json",
-    "./split-times": "./dist/split-times/index.js"
-  },
-  "types": "types/*.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "//prepublishOnly": "npm run build",
     "build": "tsc"
   },
   "keywords": [
     "orienteering",
     "javascript"
   ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./loggator": {
+      "types": "./types/loggator/index.d.ts",
+      "default": "./dist/loggator/index.js"
+    },
+    "./map": {
+      "types": "./types/map/index.d.ts",
+      "default": "./dist/map/index.js"
+    },
+    "./models": {
+      "types": "./types/models/index.d.ts",
+      "default": "./dist/models/index.js"
+    },
+    "./ocad": {
+      "types": "./types/ocad/index.d.ts",
+      "default": "./dist/ocad/index.js"
+    },
+    "./routechoice-detector": {
+      "types": "./types/routechoice-detector/index.d.ts",
+      "default": "./dist/routechoice-detector/index.js"
+    },
+    "./split-times": {
+      "types": "./types/split-times/index.d.ts",
+      "default": "./dist/split-times/index.js"
+    },
+    "./statistics": {
+      "types": "./types/statistics/index.d.ts",
+      "default": "./dist/statistics/index.js"
+    },
+    "./two-d-rerun": {
+      "types": "./types/two-d-rerun/index.d.ts",
+      "default": "./dist/two-d-rerun/index.js"
+    }
+  },
   "author": "Nicolas Rio",
   "license": "MIT",
   "devDependencies": {

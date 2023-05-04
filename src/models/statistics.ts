@@ -7,7 +7,7 @@ export const statisticsValidator = z.object({
   mistakesSum: z.array(z.number()),
 });
 
-export default interface Statistics {
+export interface Statistics {
   leader: number[];
   superman: number[];
   supermanSplits: number[];

@@ -3,7 +3,7 @@ import type { Map } from "../models/loggator-api/logator-event.js";
 
 export const cachedImageElements: Record<string, HTMLImageElement> = {};
 
-export default async function getMapCallibrationFromLoggatorEventMap(
+export async function getMapCallibrationFromLoggatorEventMap(
   loggatorEventMap: Map
 ): Promise<MapCalibration> {
   let resolve: Function;

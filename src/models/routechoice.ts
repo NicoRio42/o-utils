@@ -34,7 +34,7 @@ export interface RoutechoiceWithoutTrack {
   statistics?: RouteChoicesStatistic;
 }
 
-export default interface Routechoice extends RoutechoiceWithoutTrack {
+export interface Routechoice extends RoutechoiceWithoutTrack {
   track: [number, number][];
 }
 

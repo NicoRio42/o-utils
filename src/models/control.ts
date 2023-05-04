@@ -6,7 +6,7 @@ export const controlSchema = z.object({
   lon: z.number(),
 });
 
-export default interface Control {
+export interface Control {
   code: string;
   lat: number;
   lon: number;

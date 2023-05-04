@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export interface Event {
+export interface LoggatorInternalEvent {
   id: number;
   name: string;
   start_date: Date;
@@ -10,7 +10,7 @@ export interface Event {
   slug: string;
 }
 
-export interface Competitor {
+export interface LoggatorCompetitor {
   id: number;
   device_id: number;
   name: string;
@@ -25,7 +25,7 @@ export interface Competitor {
   device_battery: number;
 }
 
-export interface Settings {
+export interface LoggatorSettings {
   latitude: string;
   longitude: string;
   zoom: string;
@@ -37,37 +37,37 @@ export interface Settings {
   show_distance_info: string;
   show_relative_time: string;
 }
-export interface Point {
+export interface LoggatorPoint {
   lat: number;
   lng: number;
 }
 
-export interface Coordinates {
-  bottomLeft: Point;
-  bottomRight: Point;
-  topRight: Point;
-  topLeft: Point;
+export interface LoggatorCoordinates {
+  bottomLeft: LoggatorPoint;
+  bottomRight: LoggatorPoint;
+  topRight: LoggatorPoint;
+  topLeft: LoggatorPoint;
 }
 
 export interface Map {
   url: string;
   width: number;
   height: number;
-  coordinates: Coordinates;
+  coordinates: LoggatorCoordinates;
   tiles: string;
   name: string;
 }
 
 export interface LoggatorEvent {
-  event: Event;
-  competitors: Competitor[];
+  event: LoggatorInternalEvent;
+  competitors: LoggatorCompetitor[];
   tracks: string;
-  settings: Settings;
+  settings: LoggatorSettings;
   map: Map | {};
   overlays: any[];
 }
 
-export const eventSchema = z.object({
+export const loggatorInternaleventSchema = z.object({
   id: z.number(),
   name: z.string(),
   start_date: z.date(),
@@ -77,7 +77,7 @@ export const eventSchema = z.object({
   slug: z.string(),
 });
 
-export const competitorSchema = z.object({
+export const loggatorCompetitorSchema = z.object({
   id: z.number(),
   device_id: z.number(),
   name: z.string(),
@@ -92,7 +92,7 @@ export const competitorSchema = z.object({
   device_battery: z.number(),
 });
 
-export const settingsSchema = z.object({
+export const loggatorSettingsSchema = z.object({
   latitude: z.string(),
   longitude: z.string(),
   zoom: z.string(),
@@ -105,32 +105,32 @@ export const settingsSchema = z.object({
   show_relative_time: z.string(),
 });
 
-export const pointSchema = z.object({
+export const loggatorPointSchema = z.object({
   lat: z.number(),
   lng: z.number(),
 });
 
-export const coordinatesSchema = z.object({
-  bottomLeft: pointSchema,
-  bottomRight: pointSchema,
-  topRight: pointSchema,
-  topLeft: pointSchema,
+export const loggatorCoordinatesSchema = z.object({
+  bottomLeft: loggatorPointSchema,
+  bottomRight: loggatorPointSchema,
+  topRight: loggatorPointSchema,
+  topLeft: loggatorPointSchema,
 });
 
-export const mapSchema = z.object({
+export const loggatorMapSchema = z.object({
   url: z.string(),
   width: z.number(),
   height: z.number(),
-  coordinates: coordinatesSchema,
+  coordinates: loggatorCoordinatesSchema,
   tiles: z.string(),
   name: z.string(),
 });
 
 export const loggatorEventSchema = z.object({
-  event: eventSchema,
-  competitors: z.array(competitorSchema),
+  event: loggatorInternaleventSchema,
+  competitors: z.array(loggatorCompetitorSchema),
   tracks: z.string(),
-  settings: settingsSchema,
-  map: z.union([mapSchema, z.object({})]),
+  settings: loggatorSettingsSchema,
+  map: z.union([loggatorMapSchema, z.object({})]),
   overlays: z.array(z.any()),
 });

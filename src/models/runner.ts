@@ -1,9 +1,10 @@
 import { z } from "zod";
-import RunnerStatusEnum, {
+import {
+  RunnerStatusEnum,
   runnerStatusEnumValidator,
 } from "./enums/runner-status-enum.js";
-import { runnerLegValidator } from "./runner-leg.js";
 import type { RunnerLeg } from "./runner-leg.js";
+import { runnerLegValidator } from "./runner-leg.js";
 
 export const runnerTrackValidator = z.object({
   lats: z.array(z.number()),
@@ -19,7 +20,7 @@ export interface RunnerTrack {
   color: string;
 }
 
-export default interface Runner {
+export interface Runner {
   id: string;
   trackingDeviceId: string | null;
   userId: string | null;

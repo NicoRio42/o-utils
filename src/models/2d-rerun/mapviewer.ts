@@ -1,5 +1,7 @@
-export interface Mapviewer {
-  tags: Tag[];
+import { TwoDRerunRoute } from "./get-2d-rerun-data-response.js";
+
+export interface TwoDRerunMapviewer {
+  tags: TwoDRerunTag[];
   coursecoords: string;
   otechinfo: Record<string, any>;
   routes: TwoDRerunRoute[];
@@ -17,18 +19,6 @@ export interface Mapviewer {
   initLive: (arg0: number) => void;
 }
 
-export interface TwoDRerunRoute {
-  indexnumber: number;
-  runnername: string;
-  latarray: number[];
-  lngarray: number[];
-  timearray: number[];
-  splits: { index: number | null }[];
-  zerotime: number;
-  manualsplits: number;
-  unit: string;
-}
-
 interface Loadseu {
   (baseUrl: string, coursId: string): void;
 }
@@ -37,7 +27,7 @@ interface VoidFunction {
   (): void;
 }
 
-export interface Tag {
+export interface TwoDRerunTag {
   type: string;
   opened_dialog: number;
   ready_for_dialog: number;

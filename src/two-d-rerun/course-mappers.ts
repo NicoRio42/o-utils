@@ -1,14 +1,14 @@
 import { CoordinatesConverter } from "../map/coords-converter.js";
 import type { TwoDRerunCourseExport } from "../models/2d-rerun/course-export.js";
-import type { Tag } from "../models/2d-rerun/mapviewer.js";
+import type { TwoDRerunTag } from "../models/2d-rerun/mapviewer.js";
 import type { MapCalibration } from "../models/course-map.js";
-import type Leg from "../models/leg.js";
-import type Control from "../models/control.js";
+import type { Leg } from "../models/leg.js";
+import type { Control } from "../models/control.js";
 import { distanceBetweenTwoGPSPoints } from "../utils/distance-helpers.js";
-import type Routechoice from "../models/routechoice.js";
+import type { Routechoice } from "../models/routechoice.js";
 import { findRoutechoiceLegIndex } from "../utils/routechoice-leg-attributer.js";
 
-export default function mapCourseAndRoutechoicesTo2DRerun(
+export function mapCourseAndRoutechoicesTo2DRerun(
   legs: Leg[],
   course: Control[],
   callibration: MapCalibration
@@ -33,7 +33,7 @@ export default function mapCourseAndRoutechoicesTo2DRerun(
 function formatRoutechoicesForTwoDRerun(
   leg: Leg,
   coordinatesConverter: CoordinatesConverter
-): Tag[] {
+): TwoDRerunTag[] {
   return leg.routechoices.map((routechoice) => {
     const lastPoint = routechoice.track.at(-1);
 
@@ -138,7 +138,10 @@ export function parseTwoDRerunCourseAndRoutechoicesExport(
   return [controls, legs];
 }
 
-export function map2DRerunTagToRoutechoice(tag: Tag, id: string): Routechoice {
+export function map2DRerunTagToRoutechoice(
+  tag: TwoDRerunTag,
+  id: string
+): Routechoice {
   return {
     id,
     name: tag.name,

@@ -1,8 +1,8 @@
-import type Control from "../../models/control.js";
-import type Leg from "../../models/leg.js";
+import type { Control } from "../../models/control.js";
+import type { Leg } from "../../models/leg.js";
 import { distanceBetweenTwoGPSPoints } from "../../utils/distance-helpers.js";
 
-export default function parseIOFXML3CourseOCADExport(
+export function parseIOFXML3CourseOCADExport(
   courseXmlDoc: XMLDocument,
   classIndex: number
 ): [Control[], Leg[]] {

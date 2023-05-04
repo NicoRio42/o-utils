@@ -1,5 +1,5 @@
-import type Runner from "../models/runner.js";
-import type Leg from "../models/leg.js";
+import type { Runner } from "../models/runner.js";
+import type { Leg } from "../models/leg.js";
 
 export function createRoutechoiceStatistics(
   runners: Runner[],
