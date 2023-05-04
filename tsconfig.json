@@ -8,8 +8,8 @@
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "types",
-    "outDir": "dist"
+    "outDir": "dist",
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.ts", "src/**/*.deactivate.ts", "mocks"]
+  "include": ["src/**/*"]
 }

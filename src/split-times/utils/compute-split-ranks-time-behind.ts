@@ -1,5 +1,5 @@
-import type Runner from "../../models/runner.js";
-import type SupermanSplit from "../../models/superman.js";
+import type { Runner } from "../../models/runner.js";
+import type { SupermanSplit } from "../../models/superman.js";
 import type { RunnerForSort } from "./sort-runners.js";
 import sortRunners from "./sort-runners.js";
 

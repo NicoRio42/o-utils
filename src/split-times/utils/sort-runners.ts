@@ -1,4 +1,4 @@
-import type Runner from "../../models/runner.js";
+import type { Runner } from "../../models/runner.js";
 
 export default function sortRunners(
   runnerA: Runner | RunnerForSort,

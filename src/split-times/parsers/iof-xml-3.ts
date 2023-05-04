@@ -7,7 +7,7 @@ import { computeSplitsRanksMistakes } from "./compute-splits-ranks-mistakes.js";
 
 export function parseIOFXML3SplitTimesFile(
   xmlDocument: XMLDocument,
-  className: string,
+  classId: string,
   timeZone: string,
   timeOffset: number
 ): Runner[] {
@@ -23,9 +23,9 @@ export function parseIOFXML3SplitTimesFile(
 
   const classResult = classResults.find((classR) => {
     const classTag = classR.querySelector("Class");
-    const name = classTag?.querySelector("Name")?.textContent;
+    const id = classTag?.querySelector("Id")?.textContent;
 
-    return name === className;
+    return id === classId;
   });
 
   if (classResult === undefined) {

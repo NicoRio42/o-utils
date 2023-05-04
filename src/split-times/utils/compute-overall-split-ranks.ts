@@ -1,8 +1,8 @@
-import type Runner from "../../models/runner.js";
+import type { Runner } from "../../models/runner.js";
 import { computeRanksplit } from "./compute-split-ranks-time-behind.js";
 import sortRunners from "./sort-runners.js";
 import type { RunnerForSort } from "./sort-runners.js";
-import type SupermanSplit from "../../models/superman.js";
+import type { SupermanSplit } from "../../models/superman.js";
 
 export function computeOverallSplitRanks(
   runners: Runner[],
