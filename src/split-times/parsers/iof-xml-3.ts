@@ -24,7 +24,7 @@ export function parseIOFXML3SplitTimesFile(
   const classResult = classResults.find((classR) => {
     const classTag = classR.querySelector("Class");
     const id = classTag?.querySelector("Id")?.textContent?.trim();
-    if (id !== null || id !== undefined) return id === classIdOrName;
+    if (id !== null && id !== undefined) return id === classIdOrName;
     const name = classTag?.querySelector("Name")?.textContent?.trim();
     return name === classIdOrName;
   });
