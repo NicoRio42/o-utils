@@ -1,23 +1,35 @@
 import { describe, expect, test } from "vitest";
-import RunnerStatusEnum from "../../models/enums/runner-status-enum.js";
-import Runner from "../../models/runner.js";
-import { parseIOFXML3SplitTimesFile } from "./iof-xml-3.js";
 import { IOF_XML_2_SPLIT_TIMES } from "./mocks/iof-xml-2-split-times.js";
 import { IOF_XML_3_SPLIT_TIMES } from "./mocks/iof-xml-3-split-times.js";
+import { parseIOFXML3SplitTimesFile } from "../../../src/split-times/parsers/iof-xml-3.js";
+import { Runner } from "../../../src/models/runner.js";
+import { RunnerStatusEnum } from "../../../src/models/enums/runner-status-enum.js";
+import { DOMParser } from "linkedom";
 
 describe("parseIOFXML3SplitTimesFile()", () => {
   test("throw error when iof xml version is not 3.0.", () => {
     const parser = new DOMParser();
-    const xmlDoc2 = parser.parseFromString(IOF_XML_2_SPLIT_TIMES, "text/xml");
+    const xmlLinkeDomDoc2 = parser.parseFromString(
+      IOF_XML_2_SPLIT_TIMES,
+      "text/xml"
+    );
+    // @ts-ignore
+    const xmlDoc2 = xmlLinkeDomDoc2 as XMLDocument;
 
     expect(() =>
-      parseIOFXML3SplitTimesFile(xmlDoc2, "Men-A", "+02:00", 0)
+      parseIOFXML3SplitTimesFile(xmlDoc2, "1", "+02:00", 0)
     ).toThrow();
   });
 
   const parser = new DOMParser();
-  const xmlDoc3 = parser.parseFromString(IOF_XML_3_SPLIT_TIMES, "text/xml");
-  const runners = parseIOFXML3SplitTimesFile(xmlDoc3, "Men-A", "+02:00", 0);
+  const xmlLinkeDomDoc3 = parser.parseFromString(
+    IOF_XML_3_SPLIT_TIMES,
+    "text/xml"
+  );
+
+  // @ts-ignore
+  const xmlDoc3 = xmlLinkeDomDoc3 as XMLDocument;
+  const runners = parseIOFXML3SplitTimesFile(xmlDoc3, "1", "+02:00", 0);
 
   test("expecte first runner to be strict equal.", () => {
     expect(runners[0]).toStrictEqual(expectedOK);
@@ -29,13 +41,15 @@ describe("parseIOFXML3SplitTimesFile()", () => {
 });
 
 const expectedNotOK: Runner = {
-  id: 48,
-  foreignKeys: {},
+  id: "48",
+  trackingDeviceId: null,
+  userId: null,
   status: RunnerStatusEnum.NOT_OK,
   firstName: "Angus",
   lastName: "Haines",
   startTime: 1659525360,
   time: null,
+  timeOffset: 0,
   legs: [
     {
       startControlCode: "start",
@@ -256,13 +270,15 @@ const expectedNotOK: Runner = {
 };
 
 const expectedOK: Runner = {
-  id: 1,
-  foreignKeys: {},
+  id: "1",
+  trackingDeviceId: null,
+  userId: null,
   status: RunnerStatusEnum.OK,
   firstName: "Miika",
   lastName: "Kirmula",
   startTime: 1659529800,
   time: 1765,
+  timeOffset: 0,
   legs: [
     {
       startControlCode: "start",
