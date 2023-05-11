@@ -1,2 +1,5 @@
 export { getMapCallibrationFromLoggatorEventMap } from "./map-calibration.js";
-export { buildRunnersTracksFromLoggatorData } from "./points.js";
+export {
+  buildRunnersTracksFromLoggatorData,
+  getTracksMapFromLoggatorData,
+} from "./points.js";

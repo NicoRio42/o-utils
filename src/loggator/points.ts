@@ -1,5 +1,7 @@
+import { LoggatorPoints } from "../models/index.js";
 import type { LoggatorEvent } from "../models/loggator-api/logator-event.js";
-import type { Runner } from "../models/runner.js";
+import type { Runner, RunnerTrack } from "../models/runner.js";
+import { routesColors } from "../ocad/index.js";
 
 export function buildRunnersTracksFromLoggatorData(
   inputRunners: Runner[],
@@ -58,4 +60,41 @@ export function buildRunnersTracksFromLoggatorData(
   });
 
   return runners;
+}
+
+export function getTracksMapFromLoggatorData(
+  loggatorPoints: LoggatorPoints
+): Record<string, RunnerTrack> {
+  const tracksMap: Record<string, RunnerTrack> = {};
+  let trackIndex = 0;
+
+  loggatorPoints.data.split(";").forEach((point) => {
+    const [deviceId, ...rest] = point.split(",");
+
+    if (deviceId === undefined || rest.length !== 5)
+      throw new Error("Wrong format for loggator points");
+
+    const [lat, lon, elevation, time] = rest.map((str) => {
+      const num = parseFloat(str);
+      if (isNaN(num)) throw new Error("Wrong format for loggator points");
+      return num;
+    });
+
+    if (tracksMap[deviceId] === undefined) {
+      tracksMap[deviceId] = {
+        times: [],
+        lats: [],
+        lons: [],
+        color: routesColors[trackIndex],
+      };
+
+      trackIndex++;
+    }
+
+    tracksMap[deviceId].lats.push(lat);
+    tracksMap[deviceId].times.push(time);
+    tracksMap[deviceId].lons.push(lon);
+  });
+
+  return tracksMap;
 }
