@@ -1,6 +1,6 @@
 {
   "name": "orienteering-js",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Utils for managing orienteering related data in javascript",
   "files": [
     "dist/",
@@ -21,6 +21,10 @@
   ],
   "exports": {
     "./package.json": "./package.json",
+    "./gps-seuranta": {
+      "types": "./types/gps-seuranta/index.d.ts",
+      "default": "./dist/gps-seuranta/index.js"
+    },
     "./loggator": {
       "types": "./types/loggator/index.d.ts",
       "default": "./dist/loggator/index.js"
