@@ -9,7 +9,7 @@ describe("parseGPSSeurantaData()", () => {
     const data = readFileSync(path.resolve(__dirname, "./data/data.txt"));
     const init = readFileSync(path.resolve(__dirname, "./data/init.txt"));
 
-    const decodedData = parseGPSSeurantaData("", data.toString());
+    const decodedData = parseGPSSeurantaData(data.toString());
     console.log(decodedData);
     // expect(() =>
     //   parseIOFXML3SplitTimesFile(xmlDoc2, "1", "+02:00", 0)

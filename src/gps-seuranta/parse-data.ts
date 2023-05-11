@@ -1,60 +1,75 @@
-export function parseGPSSeurantaData(initFile: string, dataFile: string) {
-  return handle_gpsseuranta_data(dataFile);
-}
+import { RunnerTrack } from "../models/runner.js";
+import { routesColors } from "../ocad/index.js";
 
-function handle_gpsseuranta_data(dataFile: string) {
-  return dataFile
+export function parseGPSSeurantaData(dataFile: string) {
+  const CODE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+  const tracksMap: Record<string, RunnerTrack> = {};
+  let trackIndex = 0;
+
+  dataFile
     .trim()
     .split("\n")
     .map((s) => s.trim())
-    .flatMap(decode_gpsseuranta);
-}
+    .flatMap((dataLine: string) => {
+      const returnedArray: [string, number, number, number][] = [];
+      const lineRawArray = dataLine.split(".");
+      lineRawArray.pop();
+      const id = lineRawArray[0];
+      const firstPoint = lineRawArray[1].split("_");
+      const time = +firstPoint[0];
+      const lon = +firstPoint[1] / 50000;
+      const lat = +firstPoint[2] / 100000;
+      returnedArray.push([id, time + 1136070000, lon, lat]);
+      const length = lineRawArray.length;
 
-const CODE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      for (let i = 2; i < length; i++) {
+        if (lineRawArray[i].includes("_")) {
+          const point = lineRawArray[i].split("_");
+          const newTime = time + +point[0];
+          const newLon = lon + +point[1] / 50000;
+          const newLat = lat + +point[2] / 100000;
 
-function decode_gpsseuranta(dataLine: string) {
-  const returnedArray: string[] = [];
+          returnedArray.push([id, newTime + 1136070000, newLon, newLat]);
 
-  const lineRawArray = dataLine.split(".");
-  lineRawArray.pop();
+          break;
+        }
 
-  const id = lineRawArray[0];
+        const newTime =
+          time + CODE.indexOf(lineRawArray[i].substring(0, 1)) - 31;
 
-  const firstPoint = lineRawArray[1].split("_");
+        const newLon =
+          (lon * 50000 + CODE.indexOf(lineRawArray[i].substring(1, 2)) - 31) /
+          50000;
 
-  let time = +firstPoint[0];
-  let lat = +firstPoint[1] / 50000;
-  let lon = +firstPoint[2] / 100000;
+        const newLat =
+          (lat * 100000 + CODE.indexOf(lineRawArray[i].substring(2, 3)) - 31) /
+          100000;
 
-  returnedArray.push(`${id},${time + 1136070000},${lat},${lon}`);
+        returnedArray.push([id, newTime + 1136070000, newLon, newLat]);
+      }
 
-  let V = lon;
-  let N = lat;
-  let S = time;
+      return returnedArray;
+    })
+    .sort((point1, point2) => point1[1] - point2[1])
+    .forEach(([id, time, lon, lat]) => {
+      if (tracksMap[id] === undefined) {
+        tracksMap[id] = {
+          lats: [],
+          lons: [],
+          times: [],
+          color: routesColors[trackIndex],
+        };
 
-  const length = lineRawArray.length;
+        trackIndex++;
+      }
 
-  for (let i = 2; i < length; i++) {
-    if (lineRawArray[i].includes("_")) {
-      const Y = lineRawArray[i].split("_");
+      if (tracksMap[id].times.at(-1) === time) return;
 
-      time = S + +Y[0];
-      lat = N + +Y[1] / 50000;
-      lon = V + +Y[2] / 100000;
+      tracksMap[id].lats.push(lat);
+      tracksMap[id].times.push(time);
+      tracksMap[id].lons.push(lon);
+    });
 
-      returnedArray.push(`${id},${time + 1136070000},${lat},${lon}`);
-      break;
-    }
-
-    time = S + CODE.indexOf(lineRawArray[i].substring(0, 1)) - 31;
-    lat =
-      (N * 50000 + CODE.indexOf(lineRawArray[i].substring(1, 2)) - 31) / 50000;
-    lon =
-      (V * 100000 + CODE.indexOf(lineRawArray[i].substring(2, 3)) - 31) /
-      100000;
-
-    returnedArray.push(`${id},${time + 1136070000},${lat},${lon}`);
-  }
-
-  return returnedArray;
+  return tracksMap;
 }
