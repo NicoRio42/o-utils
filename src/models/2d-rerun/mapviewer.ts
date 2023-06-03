@@ -1,4 +1,5 @@
 import { TwoDRerunRoute } from "./get-2d-rerun-data-response.js";
+import { TwoDRerunTag } from "./tag.js";
 
 export interface TwoDRerunMapviewer {
   tags: TwoDRerunTag[];
@@ -25,28 +26,4 @@ interface Loadseu {
 
 interface VoidFunction {
   (): void;
-}
-
-export interface TwoDRerunTag {
-  type: string;
-  opened_dialog: number;
-  ready_for_dialog: number;
-  runnername: string;
-  points: string[];
-  pointsxy: string[];
-  currenttime: number;
-  currentalt: number;
-  totalup: number;
-  show: number;
-  offsettxt_x: number;
-  offsettxt_y: number;
-  offsettxt_basex: number;
-  offsettxt_basey: number;
-  group: number;
-  x: number;
-  y: number;
-  length: number;
-  name: string;
-  description: string;
-  color: string;
 }

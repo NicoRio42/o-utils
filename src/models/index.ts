@@ -44,7 +44,11 @@ export {
 } from "./runner.js";
 export { statisticsValidator, Statistics } from "./statistics.js";
 export { SupermanSplit } from "./superman.js";
-export { TwoDRerunCourseExport } from "./2d-rerun/course-export.js";
+export {
+  TwoDRerunCourseExport,
+  twoDRerunCourseExportSchema,
+} from "./2d-rerun/course-export.js";
+export { TwoDRerunTag, twoDRerunTagSchema } from "./2d-rerun/tag.js";
 export {
   TwoDRerunMap,
   TwoDRerunRoute,
@@ -53,7 +57,7 @@ export {
   twoDRerunRouteSchema,
   twoDRerunEventDataSchema,
 } from "./2d-rerun/get-2d-rerun-data-response.js";
-export { TwoDRerunMapviewer, TwoDRerunTag } from "./2d-rerun/mapviewer.js";
+export { TwoDRerunMapviewer } from "./2d-rerun/mapviewer.js";
 export {
   RunnerStatusEnum,
   runnerStatusEnumValidator,
