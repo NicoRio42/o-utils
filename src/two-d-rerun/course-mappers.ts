@@ -1,12 +1,12 @@
 import { CoordinatesConverter } from "../map/coords-converter.js";
 import type { TwoDRerunCourseExport } from "../models/2d-rerun/course-export.js";
-import type { TwoDRerunTag } from "../models/2d-rerun/mapviewer.js";
 import type { MapCalibration } from "../models/course-map.js";
 import type { Leg } from "../models/leg.js";
 import type { Control } from "../models/control.js";
 import { distanceBetweenTwoGPSPoints } from "../utils/distance-helpers.js";
 import type { Routechoice } from "../models/routechoice.js";
 import { findRoutechoiceLegIndex } from "../utils/routechoice-leg-attributer.js";
+import { TwoDRerunTag } from "../models/index.js";
 
 export function mapCourseAndRoutechoicesTo2DRerun(
   legs: Leg[],
@@ -27,6 +27,7 @@ export function mapCourseAndRoutechoicesTo2DRerun(
 
       return `${xyPoint[0]},${xyPoint[1]}`;
     }),
+    otechinfo: {},
   };
 }
 

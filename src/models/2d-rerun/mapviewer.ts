@@ -1,5 +1,5 @@
 import { TwoDRerunRoute } from "./get-2d-rerun-data-response.js";
-import { TwoDRerunTag } from "./tag.js";
+import type { TwoDRerunTag } from "./tag.js";
 
 export interface TwoDRerunMapviewer {
   tags: TwoDRerunTag[];
