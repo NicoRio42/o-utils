@@ -118,6 +118,7 @@ export function parseTwoDRerunCourseAndRoutechoicesExport(
 
   for (let i = 1; i < constrolsLength; i++) {
     legs.push({
+      id: crypto.randomUUID(),
       startControlCode: controls[i - 1].code,
       finishControlCode: controls[i].code,
       startLat: controls[i - 1].lat,

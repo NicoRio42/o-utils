@@ -1,85 +1,70 @@
-export { controlSchema, Control } from "./control.js";
-export {
-  courseDataWithoutRunnersValidator,
-  courseDataValidator,
-  CourseDataWithoutRunnersAndLegs,
-  CourseDataWithoutRunnersWithSerializedNestedArrays,
-  CourseDataWithoutRunners,
-  CourseData,
-} from "./course-data.js";
-export {
-  mapCalibrationValidator,
-  courseMapValidator,
-  CourseMap,
-  MapCalibration,
-} from "./course-map.js";
-export {
-  legWithoutRoutechoicesValidator,
-  legValidator,
-  LegWithoutRoutechoices,
-  Leg,
-  LegWithSerializedNestedArrays,
-  serializeNestedArraysInLegs,
-  parseNestedArraysInLegs,
-} from "./leg.js";
-export {
-  routeChoicesStatisticValidator,
-  routechoiceWithoutTrackValidator,
-  routechoiceValidator,
-  RouteChoicesStatistic,
-  RoutechoiceWithoutTrack,
-  Routechoice,
-  RoutechoiceWithSerializedTrack,
-} from "./routechoice.js";
-export {
-  runnerLegValidator,
-  RunnerLeg,
-  EMPTY_RUNNER_LEG,
-} from "./runner-leg.js";
-export {
-  runnerTrackValidator,
-  RunnerTrack,
-  Runner,
-  runnerValidator,
-} from "./runner.js";
-export { statisticsValidator, Statistics } from "./statistics.js";
-export { SupermanSplit } from "./superman.js";
 export {
   TwoDRerunCourseExport,
   twoDRerunCourseExportSchema,
 } from "./2d-rerun/course-export.js";
-export { TwoDRerunTag, twoDRerunTagSchema } from "./2d-rerun/tag.js";
 export {
+  TwoDRerunEventData,
   TwoDRerunMap,
   TwoDRerunRoute,
-  TwoDRerunEventData,
+  twoDRerunEventDataSchema,
   twoDRerunMapSchema,
   twoDRerunRouteSchema,
-  twoDRerunEventDataSchema,
 } from "./2d-rerun/get-2d-rerun-data-response.js";
 export { TwoDRerunMapviewer } from "./2d-rerun/mapviewer.js";
+export { TwoDRerunTag, twoDRerunTagSchema } from "./2d-rerun/tag.js";
+export { Control, controlSchema } from "./control.js";
+export { CourseData, courseDataValidator } from "./course-data.js";
+export {
+  CourseMap,
+  MapCalibration,
+  courseMapValidator,
+  mapCalibrationValidator,
+} from "./course-map.js";
 export {
   RunnerStatusEnum,
   runnerStatusEnumValidator,
 } from "./enums/runner-status-enum.js";
+export { Leg, legValidator } from "./leg.js";
 export {
-  LoggatorInternalEvent,
   LoggatorCompetitor,
-  LoggatorSettings,
-  LoggatorPoint,
   LoggatorCoordinates,
-  Map,
   LoggatorEvent,
-  loggatorInternaleventSchema,
+  LoggatorInternalEvent,
+  LoggatorPoint,
+  LoggatorSettings,
+  Map,
   loggatorCompetitorSchema,
-  loggatorSettingsSchema,
-  loggatorPointSchema,
   loggatorCoordinatesSchema,
-  loggatorMapSchema,
   loggatorEventSchema,
+  loggatorInternaleventSchema,
+  loggatorMapSchema,
+  loggatorPointSchema,
+  loggatorSettingsSchema,
 } from "./loggator-api/logator-event.js";
 export {
   LoggatorPoints,
   loggatorPointsValidator,
 } from "./loggator-api/loggator-points.js";
-export { isRunner, isNotNullRunnerLeg } from "./type-guards/runner-guards.js";
+export {
+  RouteChoicesStatistic,
+  Routechoice,
+  RoutechoiceWithSerializedTrack,
+  RoutechoiceWithoutTrack,
+  routeChoicesStatisticValidator,
+  routechoiceValidator,
+  routechoiceWithoutTrackValidator,
+} from "./routechoice.js";
+export {
+  EMPTY_RUNNER_LEG,
+  RunnerLeg,
+  runnerLegValidator,
+} from "./runner-leg.js";
+export {
+  Runner,
+  RunnerTrack,
+  runnerTrackValidator,
+  runnerValidator,
+} from "./runner.js";
+export { Statistics, statisticsValidator } from "./statistics.js";
+export { SupermanSplit } from "./superman.js";
+export { isNotNullRunnerLeg, isRunner } from "./type-guards/runner-guards.js";

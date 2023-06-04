@@ -104,6 +104,7 @@ export function parseIOFXML3CourseOCADExport(
     if (index === 0) return;
 
     legs.push({
+      id: crypto.randomUUID(),
       startControlCode: filteredcontrols[index - 1].code,
       finishControlCode: control.code,
       startLat: filteredcontrols[index - 1].lat,
