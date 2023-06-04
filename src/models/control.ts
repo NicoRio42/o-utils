@@ -1,13 +1,10 @@
 import { z } from "zod";
 
 export const controlSchema = z.object({
+  id: z.string(),
   code: z.string(),
   lat: z.number(),
   lon: z.number(),
 });
 
-export interface Control {
-  code: string;
-  lat: number;
-  lon: number;
-}
+export type Control = z.infer<typeof controlSchema>;

@@ -106,6 +106,7 @@ export function parseTwoDRerunCourseAndRoutechoicesExport(
     const [lat, lon] = coordinatesConverter.xYToLatLong([x, y]);
 
     return {
+      id: crypto.randomUUID(),
       code,
       lat,
       lon,

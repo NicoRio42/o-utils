@@ -79,6 +79,7 @@ export function parseIOFXML3CourseOCADExport(
       );
 
     return {
+      id: crypto.randomUUID(),
       code,
       lat: coords.lat,
       lon: coords.lon,
