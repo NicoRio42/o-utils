@@ -93,6 +93,7 @@ function getRunners(personResults, timeZone) {
     const startTime = computeStartTime(startTimeTag, timeZone);
 
     const timeTag = personResult.querySelector("Time");
+
     const time =
       status === RunnerStatusEnum.OK
         ? extractNumberFromElementOrThrowError(timeTag, "Not a valid time")
@@ -213,7 +214,7 @@ function extractLegsFromPersonResult(personResult) {
 
       if (
         previousControlStatus ===
-          IOFXMLSplitTimeStatusEnum.Additional.valueOf() ||
+        IOFXMLSplitTimeStatusEnum.Additional.valueOf() ||
         previousControlStatus === IOFXMLSplitTimeStatusEnum.Missing.valueOf()
       ) {
         legs.push(null);

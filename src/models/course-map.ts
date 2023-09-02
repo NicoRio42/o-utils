@@ -21,7 +21,7 @@ export interface CourseMap {
   calibration: MapCalibration;
 }
 
-interface MapCalibrationPoint {
+export interface MapCalibrationPoint {
   gps: { lat: number; lon: number };
   point: { x: number; y: number };
 }
