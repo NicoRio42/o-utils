@@ -1,7 +1,10 @@
-import type { Runner } from "../../models/runner.js";
-import sortRunners from "./sort-runners.js";
+import { sortRunners } from "./shared.js";
 
-export default function computeRunnersRanks(runners: Runner[]): Runner[] {
+/**
+ * @param {import("../../models/runner.js").Runner[]} runners 
+ * @returns 
+ */
+export default function computeRunnersRanks(runners) {
   const clonedRunners = structuredClone(runners).sort(sortRunners);
   const bestTime = clonedRunners[0].time;
 

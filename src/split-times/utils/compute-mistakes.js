@@ -1,13 +1,20 @@
-import type { Runner } from "../../models/runner.js";
-import type { RunnerLeg } from "../../models/runner-leg.js";
-import type { SupermanSplit } from "../../models/superman.js";
 import { arrayAverage } from "./shared.js";
 
-export default function computeRunnersMistakes(
-  runners: Runner[],
-  supermanSplits: SupermanSplit[],
-  mistakeDetectionRatio = 1.2
-): Runner[] {
+/** @typedef {import("../../models/runner.js").Runner} Runner */
+/** @typedef {import("../../models/superman.js").SupermanSplit} SupermanSplit */
+/** @typedef {import("../../models/runner-leg.js").RunnerLeg} RunnerLeg */
+
+/** 
+ * @template T
+ * @typedef {import("../models/splittimes-error.model.js").ValueOrError<T>} ValueOrError
+ */
+
+/**
+ * @param {Runner[]} runners
+ * @param {SupermanSplit[]} supermanSplits 
+ * @param {number} [mistakeDetectionRatio=1.2] 
+ */
+export default function computeRunnersMistakes(runners, supermanSplits, mistakeDetectionRatio = 1.2) {
   const clonedRunners = structuredClone(runners);
 
   clonedRunners.forEach((runner) => {
@@ -46,7 +53,12 @@ export default function computeRunnersMistakes(
     let timeLost = 0;
 
     runner.totalTimeLost = runner.legs.reduce(
-      (timeLost: number, leg: RunnerLeg | null, legIndex: number) => {
+      /**
+       * @param {number} timeLost 
+       * @param {RunnerLeg | null} leg 
+       * @param {number} legIndex
+       */
+      (timeLost, leg, legIndex) => {
         if (leg === null || !leg.isMistake) {
           return 0;
         }
@@ -67,11 +79,17 @@ export default function computeRunnersMistakes(
   return clonedRunners;
 }
 
+/**
+ * @param {(number | null)[]} percentagesBehindSuperman 
+ * @param {Runner} runner 
+ * @param {number} averagePercentage 
+ * @param {number} mistakeDetectionRatio
+ */
 function clearPercentageBehindAndComputeIsMistake(
-  percentagesBehindSuperman: (number | null)[],
-  runner: Runner,
-  averagePercentage: number,
-  mistakeDetectionRatio: number
+  percentagesBehindSuperman,
+  runner,
+  averagePercentage,
+  mistakeDetectionRatio
 ) {
   return percentagesBehindSuperman.map((percentage, legIndex) => {
     const leg = runner.legs[legIndex];

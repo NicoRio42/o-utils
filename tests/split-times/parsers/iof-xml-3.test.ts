@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { IOF_XML_2_SPLIT_TIMES } from "./mocks/iof-xml-2-split-times.js";
 import { IOF_XML_3_SPLIT_TIMES } from "./mocks/iof-xml-3-split-times.js";
-import { parseIOFXML3SplitTimesFile } from "../../../src/split-times/parsers/iof-xml-3.js";
+import { parseIOFXML3SplitTimesFile } from "../../../src/split-times/parsers/iof-xml-3-parser.js/index.js";
 import { Runner } from "../../../src/models/runner.js";
 import { RunnerStatusEnum } from "../../../src/models/enums/runner-status-enum.js";
 import { DOMParser } from "linkedom";
@@ -16,9 +16,7 @@ describe("parseIOFXML3SplitTimesFile()", () => {
     // @ts-ignore
     const xmlDoc2 = xmlLinkeDomDoc2 as XMLDocument;
 
-    expect(() =>
-      parseIOFXML3SplitTimesFile(xmlDoc2, "1", "+02:00", 0)
-    ).toThrow();
+    expect(() => parseIOFXML3SplitTimesFile(xmlDoc2, "1", "+02:00")).toThrow();
   });
 
   const parser = new DOMParser();
@@ -29,7 +27,7 @@ describe("parseIOFXML3SplitTimesFile()", () => {
 
   // @ts-ignore
   const xmlDoc3 = xmlLinkeDomDoc3 as XMLDocument;
-  const runners = parseIOFXML3SplitTimesFile(xmlDoc3, "1", "+02:00", 0);
+  const runners = parseIOFXML3SplitTimesFile(xmlDoc3, "1", "+02:00");
 
   test("expecte first runner to be strict equal.", () => {
     expect(runners[0]).toStrictEqual(expectedOK);
