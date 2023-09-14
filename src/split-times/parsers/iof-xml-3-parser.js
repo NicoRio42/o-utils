@@ -1,7 +1,6 @@
-import { RunnerStatusEnum } from "../../models/enums/runner-status-enum.js";
-import { EMPTY_RUNNER_LEG } from "../../models/runner-leg.js";
-import { getStartControlCode } from "../utils/shared.js";
+import { EMPTY_RUNNER_LEG } from "../../models/empty-runner-leg.js";
 import { computeSplitsRanksMistakes } from "../utils/compute-splits-ranks-mistakes.js";
+import { getStartControlCode } from "../utils/shared.js";
 
 /** @typedef {import("../../models/runner.js").Runner} Runner */
 /** @typedef {import("../../models/runner-leg.js").RunnerLeg} RunnerLeg */
@@ -87,8 +86,8 @@ function getRunners(personResults, timeZone) {
     }
 
     const status = OK_IOF_XML_STATUS.includes(IOFXMLStatus)
-      ? RunnerStatusEnum.OK
-      : RunnerStatusEnum.NOT_OK;
+      ? "ok"
+      : "not-ok";
 
     const id = crypto.randomUUID();
 
@@ -105,7 +104,7 @@ function getRunners(personResults, timeZone) {
     /** @type {number | null} */
     let time = null;
 
-    if (status === RunnerStatusEnum.OK) {
+    if (status === "ok") {
       const timeString = personResult.querySelector("Time")?.textContent?.trim();
 
       if (timeString === undefined) {

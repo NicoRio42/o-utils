@@ -63,7 +63,7 @@ export function getStartControlCode(legTags, index) {
  * @returns {ValueOrError<number>}
  */
 export function parseTimeFromString(str) {
-  const [hours, minutes, seconds] = str.split(":").map(parseInt);
+  const [hours, minutes, seconds] = str.split(":").map(str => parseInt(str, 10));
 
   if ([hours, minutes, seconds].some(n => isNaN(n))) {
     return [null, { code: "INVALID_TIME", message: "Time string is invalid" }]

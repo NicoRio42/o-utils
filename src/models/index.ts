@@ -20,10 +20,6 @@ export {
   courseMapValidator,
   mapCalibrationValidator,
 } from "./course-map.js";
-export {
-  RunnerStatusEnum,
-  runnerStatusEnumValidator,
-} from "./enums/runner-status-enum.js";
 export { Leg, legValidator } from "./leg.js";
 export {
   LoggatorCompetitor,
@@ -54,11 +50,8 @@ export {
   routechoiceValidator,
   routechoiceWithoutTrackValidator,
 } from "./routechoice.js";
-export {
-  EMPTY_RUNNER_LEG,
-  RunnerLeg,
-  runnerLegValidator,
-} from "./runner-leg.js";
+export { RunnerLeg, runnerLegValidator } from "./runner-leg.js";
+export { EMPTY_RUNNER_LEG } from "./empty-runner-leg.js";
 export {
   Runner,
   RunnerTrack,

@@ -1,6 +1,6 @@
 {
   "name": "orienteering-js",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "Utils for managing orienteering related data in javascript",
   "files": [
     "dist/",
@@ -65,21 +65,21 @@
   "author": "Nicolas Rio",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.16.3",
-    "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "eslint": "^8.0.1",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-config-standard-with-typescript": "^34.0.1",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-n": "^15.0.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "linkedom": "^0.14.26",
-    "prettier": "2.8.8",
-    "typescript": "*",
-    "vitest": "^0.30.1"
+    "@types/node": "^20.5.9",
+    "@typescript-eslint/eslint-plugin": "^6.6.0",
+    "eslint": "^8.48.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard-with-typescript": "^39.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.0.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "linkedom": "^0.15.3",
+    "prettier": "3.0.3",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.3"
   },
   "dependencies": {
-    "mathjs": "^11.8.0"
+    "mathjs": "^11.11.0"
   },
   "peerDependencies": {
     "zod": "^3.21.4"

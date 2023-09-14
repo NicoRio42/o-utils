@@ -1,7 +1,6 @@
-import { RunnerStatusEnum } from "../../models/enums/runner-status-enum.js";
-import { EMPTY_RUNNER_LEG } from "../../models/runner-leg.js";
 import { getStartControlCode, parseTimeFromString } from "../utils/shared.js";
 import { computeSplitsRanksMistakes } from "../utils/compute-splits-ranks-mistakes.js";
+import { EMPTY_RUNNER_LEG } from "../../models/empty-runner-leg.js";
 
 /** @typedef {import("../../models/runner.js").Runner} Runner */
 /** @typedef {import("../../models/runner-leg.js").RunnerLeg} RunnerLeg */
@@ -33,7 +32,7 @@ export function parseIOFXML2SplitTimesFile(
             ?.getAttribute("version");
 
         if (!IOFXMLVersion?.startsWith("2.")) {
-            return [null, { code: "NOT_IOF_XML_3", message: "Not an IOF XML 2 file" }]
+            return [null, { code: "NOT_IOF_XML_2", message: "Not an IOF XML 2 file" }]
         }
 
         const classResults = Array.from(xmlDocument.querySelectorAll("ClassResult"));
@@ -72,7 +71,7 @@ function getRunners(personResults, date, timeZone) {
     const runners = []
 
     for (const personResult of Array.from(personResults)) {
-        const IOFXMLStatus = personResult.querySelector("CompetitorStatus")?.textContent?.trim();
+        const IOFXMLStatus = personResult.querySelector("CompetitorStatus")?.getAttribute("value")?.trim();
 
         // We skip runners with no split at all
         if (IOFXMLStatus === undefined || !VALID_IOF_XML_STATUS.includes(IOFXMLStatus)) {
@@ -80,8 +79,8 @@ function getRunners(personResults, date, timeZone) {
         }
 
         const status = OK_IOF_XML_STATUS.includes(IOFXMLStatus)
-            ? RunnerStatusEnum.OK
-            : RunnerStatusEnum.NOT_OK;
+            ? "ok"
+            : "not-ok";
 
         const id = crypto.randomUUID();
 
@@ -104,7 +103,7 @@ function getRunners(personResults, date, timeZone) {
         /** @type {number | null} */
         let time = null;
 
-        if (status === RunnerStatusEnum.OK) {
+        if (status === "ok") {
             const [parsedTime, timeError] = parseTimeFromString(timeString);
 
             if (timeError !== null) {

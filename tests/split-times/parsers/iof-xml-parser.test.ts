@@ -1,13 +1,13 @@
 import { describe, expect, test } from "vitest";
 import { IOF_XML_2_SPLIT_TIMES } from "./mocks/iof-xml-2-split-times.js";
 import { IOF_XML_3_SPLIT_TIMES } from "./mocks/iof-xml-3-split-times.js";
-import { parseIOFXML3SplitTimesFile } from "../../../src/split-times/parsers/iof-xml-3-parser.js/index.js";
+import { parseIofXmlSplitTimesFile } from "../../../src/split-times/parsers/iof-xml-parser.js";
 import { Runner } from "../../../src/models/runner.js";
-import { RunnerStatusEnum } from "../../../src/models/enums/runner-status-enum.js";
 import { DOMParser } from "linkedom";
+// import { inspect } from "util";
 
-describe("parseIOFXML3SplitTimesFile()", () => {
-  test("throw error when iof xml version is not 3.0.", () => {
+describe("parseIofXmlSplitTimesFile()", () => {
+  describe("Iof XML 2 file", () => {
     const parser = new DOMParser();
     const xmlLinkeDomDoc2 = parser.parseFromString(
       IOF_XML_2_SPLIT_TIMES,
@@ -16,7 +16,21 @@ describe("parseIOFXML3SplitTimesFile()", () => {
     // @ts-ignore
     const xmlDoc2 = xmlLinkeDomDoc2 as XMLDocument;
 
-    expect(() => parseIOFXML3SplitTimesFile(xmlDoc2, "1", "+02:00")).toThrow();
+    const [runners, splitsError] = parseIofXmlSplitTimesFile(
+      xmlDoc2,
+      "Dames",
+      "+02:00",
+      "2022-03-11"
+    );
+
+    const firstRunner = runners?.at(0);
+    if (firstRunner) firstRunner.id = "1";
+
+    test("expecte first runner to be strict equal.", () => {
+      expect(firstRunner).toStrictEqual(expectedOk2);
+    });
+
+    // console.log(inspect(runners?.at(0), { depth: null }), splitsError);
   });
 
   const parser = new DOMParser();
@@ -25,24 +39,311 @@ describe("parseIOFXML3SplitTimesFile()", () => {
     "text/xml"
   );
 
-  // @ts-ignore
-  const xmlDoc3 = xmlLinkeDomDoc3 as XMLDocument;
-  const runners = parseIOFXML3SplitTimesFile(xmlDoc3, "1", "+02:00");
+  describe("Iof XML 3 file", () => {
+    // @ts-ignore
+    const xmlDoc3 = xmlLinkeDomDoc3 as XMLDocument;
+    const [runners, runnersError] = parseIofXmlSplitTimesFile(
+      xmlDoc3,
+      "1",
+      "+02:00",
+      "2022-03-11"
+    );
 
-  test("expecte first runner to be strict equal.", () => {
-    expect(runners[0]).toStrictEqual(expectedOK);
-  });
+    const firstRunner = runners?.at(0);
+    if (firstRunner) firstRunner.id = "1";
 
-  test("expecte last runner with missing controls to be strict equal.", () => {
-    expect(runners.at(-1)).toStrictEqual(expectedNotOK);
+    const lastRunner = runners?.at(-1);
+    if (lastRunner) lastRunner.id = "48";
+
+    test("expecte first runner to be strict equal.", () => {
+      expect(firstRunner).toStrictEqual(expectedOK3);
+    });
+
+    test("expecte last runner with missing controls to be strict equal.", () => {
+      expect(lastRunner).toStrictEqual(expectedNotOK3);
+    });
   });
 });
 
-const expectedNotOK: Runner = {
+const expectedOk2 = {
+  id: "1",
+  userId: null,
+  trackingDeviceId: null,
+  status: "ok",
+  firstName: "Annabelle",
+  lastName: "DELENNE",
+  startTime: 1647015397,
+  time: 959,
+  legs: [
+    {
+      startControlCode: "start",
+      finishControlCode: "31",
+      timeOverall: 55,
+      time: 55,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 0,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "31",
+      finishControlCode: "32",
+      timeOverall: 136,
+      time: 81,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 0,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "32",
+      finishControlCode: "33",
+      timeOverall: 290,
+      time: 154,
+      rankSplit: 2,
+      timeBehindSplit: 4,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 4,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "33",
+      finishControlCode: "34",
+      timeOverall: 341,
+      time: 51,
+      rankSplit: 2,
+      timeBehindSplit: 1,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 5,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "34",
+      finishControlCode: "37",
+      timeOverall: 428,
+      time: 87,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 5,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "37",
+      finishControlCode: "38",
+      timeOverall: 526,
+      time: 98,
+      rankSplit: 2,
+      timeBehindSplit: 1,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 6,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "38",
+      finishControlCode: "39",
+      timeOverall: 595,
+      time: 69,
+      rankSplit: 2,
+      timeBehindSplit: 2,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 8,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "39",
+      finishControlCode: "40",
+      timeOverall: 626,
+      time: 31,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 8,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "40",
+      finishControlCode: "41",
+      timeOverall: 661,
+      time: 35,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 8,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "41",
+      finishControlCode: "42",
+      timeOverall: 716,
+      time: 55,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 8,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "42",
+      finishControlCode: "43",
+      timeOverall: 739,
+      time: 23,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 8,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "43",
+      finishControlCode: "44",
+      timeOverall: 853,
+      time: 114,
+      rankSplit: 3,
+      timeBehindSplit: 5,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 13,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "44",
+      finishControlCode: "45",
+      timeOverall: 930,
+      time: 77,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 13,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "45",
+      finishControlCode: "46",
+      timeOverall: 949,
+      time: 19,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 13,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "46",
+      finishControlCode: "3",
+      timeOverall: 959,
+      time: 10,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 13,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+    {
+      startControlCode: "3",
+      finishControlCode: "finish",
+      timeOverall: 959,
+      time: 0,
+      rankSplit: 1,
+      timeBehindSplit: 0,
+      rankOverall: 1,
+      timeBehindOverall: 0,
+      timeBehindSuperman: 13,
+      isMistake: false,
+      timeLoss: 0,
+      routeChoiceTimeLoss: null,
+      detectedRouteChoice: null,
+      manualRouteChoice: null,
+    },
+  ],
+  rank: 1,
+  timeBehind: 0,
+  totalTimeLost: 0,
+  track: null,
+  timeOffset: 0,
+};
+
+const expectedNotOK3: Runner = {
   id: "48",
   trackingDeviceId: null,
   userId: null,
-  status: RunnerStatusEnum.NOT_OK,
+  status: "not-ok",
   firstName: "Angus",
   lastName: "Haines",
   startTime: 1659525360,
@@ -267,11 +568,11 @@ const expectedNotOK: Runner = {
   track: null,
 };
 
-const expectedOK: Runner = {
+const expectedOK3: Runner = {
   id: "1",
   trackingDeviceId: null,
   userId: null,
-  status: RunnerStatusEnum.OK,
+  status: "ok",
   firstName: "Miika",
   lastName: "Kirmula",
   startTime: 1659529800,
