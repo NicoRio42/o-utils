@@ -118,18 +118,21 @@ function getRunners(personResults, timeZone) {
       if (isNaN(time)) {
         return [null, { code: "INVALID_TIME", message: `Overall time is invalid for runner ${firstName} ${lastName}` }]
       }
-    } else {
-      const finishTimeTag = personResult.querySelector("FinishTime");
-      const [finishTime, finishTimeError] = computeStartOrFinishTime(finishTimeTag, timeZone);
-      if (finishTimeError === null) time = finishTime - startTime;
     }
+    // else {
+    //   const finishTimeTag = personResult.querySelector("FinishTime");
+    //   const [finishTime, finishTimeError] = computeStartOrFinishTime(finishTimeTag, timeZone);
+
+    //   if (finishTimeError === null) {
+    //     time = finishTime - startTime;
+    //   }
+    // }
 
     if (legsError !== null) {
       return [null, legsError];
     }
 
     if (legs.length === 0) continue;
-
     legs.push(computeLastLeg(time, legs));
 
     runners.push({
@@ -176,8 +179,9 @@ function computeLastLeg(time, legs) {
     time === null ||
     secondLastLeg === null ||
     secondLastLeg?.timeOverall === undefined
-  )
+  ) {
     return null;
+  }
 
   const startControlCode = secondLastLeg.finishControlCode;
 

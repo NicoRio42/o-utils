@@ -111,11 +111,12 @@ function getRunners(personResults, date, timeZone) {
             }
 
             time = parsedTime;
-        } else {
-            const finishTimeTag = personResult.querySelector("FinishTime");
-            const [finishTime, finishTimeError] = computeStartOrFinishTime(finishTimeTag, date, timeZone);
-            if (finishTimeError === null) time = finishTime - startTime;
         }
+        // else {
+        //     const finishTimeTag = personResult.querySelector("FinishTime");
+        //     const [finishTime, finishTimeError] = computeStartOrFinishTime(finishTimeTag, date, timeZone);
+        //     if (finishTimeError === null) time = finishTime - startTime;
+        // }
 
         const [legs, legsError] = extractLegsFromPersonResult(personResult);
 
