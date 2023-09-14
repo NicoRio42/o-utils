@@ -1,6 +1,6 @@
 import { EMPTY_RUNNER_LEG } from "../../models/empty-runner-leg.js";
 import { computeSplitsRanksMistakes } from "../utils/compute-splits-ranks-mistakes.js";
-import { getStartControlCode } from "../utils/shared.js";
+import { getStartControlCode, parseTimeFromString } from "../utils/shared.js";
 
 /** @typedef {import("../../models/runner.js").Runner} Runner */
 /** @typedef {import("../../models/runner-leg.js").RunnerLeg} RunnerLeg */
@@ -98,8 +98,10 @@ function getRunners(personResults, timeZone) {
     const firstName = given !== null ? given.textContent : "";
 
     const startTimeTag = personResult.querySelector("StartTime");
-    const [startTime, startTimeError] = computeStartTime(startTimeTag, timeZone);
+    const [startTime, startTimeError] = computeStartOrFinishTime(startTimeTag, timeZone);
     if (startTimeError !== null) return [null, startTimeError];
+
+    const [legs, legsError] = extractLegsFromPersonResult(personResult);
 
     /** @type {number | null} */
     let time = null;
@@ -116,9 +118,11 @@ function getRunners(personResults, timeZone) {
       if (isNaN(time)) {
         return [null, { code: "INVALID_TIME", message: `Overall time is invalid for runner ${firstName} ${lastName}` }]
       }
+    } else {
+      const finishTimeTag = personResult.querySelector("FinishTime");
+      const [finishTime, finishTimeError] = computeStartOrFinishTime(finishTimeTag, timeZone);
+      if (finishTimeError === null) time = finishTime - startTime;
     }
-
-    const [legs, legsError] = extractLegsFromPersonResult(personResult);
 
     if (legsError !== null) {
       return [null, legsError];
@@ -169,7 +173,7 @@ function computeLastLeg(time, legs) {
   const secondLastLeg = legs.at(-1);
 
   if (
-    time == null ||
+    time === null ||
     secondLastLeg === null ||
     secondLastLeg?.timeOverall === undefined
   )
@@ -188,18 +192,18 @@ function computeLastLeg(time, legs) {
 
 /**
  *
- * @param {Element | null} startTimeTag
+ * @param {Element | null} startOrFinishTimeTag
  * @param {string} timeZone
  * @returns {ValueOrError<number>}
  */
-function computeStartTime(startTimeTag, timeZone) {
-  if (startTimeTag === null || startTimeTag.textContent === null) {
+function computeStartOrFinishTime(startOrFinishTimeTag, timeZone) {
+  if (startOrFinishTimeTag === null || startOrFinishTimeTag.textContent === null) {
     return [null, { code: "INVALID_RUNNER", message: "No start time with a valid runner status" }]
   }
 
-  const time = startTimeTag.textContent.includes("+")
-    ? startTimeTag.textContent
-    : startTimeTag.textContent + timeZone;
+  const time = startOrFinishTimeTag.textContent.includes("+")
+    ? startOrFinishTimeTag.textContent
+    : startOrFinishTimeTag.textContent + timeZone;
 
   const dateTime = new Date(time);
 

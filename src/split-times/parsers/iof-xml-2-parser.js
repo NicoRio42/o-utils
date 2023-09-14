@@ -88,7 +88,7 @@ function getRunners(personResults, date, timeZone) {
         const firstName = personResult.querySelector("Person PersonName Given")?.textContent ?? "";
 
         const startTimeTag = personResult.querySelector("Result StartTime Clock");
-        const [startTime, startTimeError] = computeStartTime(startTimeTag, date, timeZone);
+        const [startTime, startTimeError] = computeStartOrFinishTime(startTimeTag, date, timeZone);
 
         if (startTimeError !== null) {
             return [null, startTimeError]
@@ -111,6 +111,10 @@ function getRunners(personResults, date, timeZone) {
             }
 
             time = parsedTime;
+        } else {
+            const finishTimeTag = personResult.querySelector("FinishTime");
+            const [finishTime, finishTimeError] = computeStartOrFinishTime(finishTimeTag, date, timeZone);
+            if (finishTimeError === null) time = finishTime - startTime;
         }
 
         const [legs, legsError] = extractLegsFromPersonResult(personResult);
@@ -183,17 +187,17 @@ function computeLastLeg(time, legs) {
 
 /**
  *
- * @param {Element | null} startTimeTag
+ * @param {Element | null} startOrFinishTimeTag
  * @param {string} date A date in the YYYY-MM-DD format
  * @param {string} timeZone
  * @returns {ValueOrError<number>}
  */
-function computeStartTime(startTimeTag, date, timeZone) {
-    if (startTimeTag === null || startTimeTag.textContent === null) {
+function computeStartOrFinishTime(startOrFinishTimeTag, date, timeZone) {
+    if (startOrFinishTimeTag === null || startOrFinishTimeTag.textContent === null) {
         return [null, { code: "INVALID_TIME", message: "No start time with a valid runner status" }]
     }
 
-    const time = `${date}T${startTimeTag.textContent.trim()}${timeZone}`
+    const time = `${date}T${startOrFinishTimeTag.textContent.trim()}${timeZone}`
     const dateTime = new Date(time);
 
     return [dateTime.valueOf() / 1000, null];
