@@ -58,12 +58,30 @@ export function getStartControlCode(legTags, index) {
 }
 
 /**
- * Get time in seconds from string with format HH:MM:SS
+ * Get time in seconds from string with format HH:MM:SS or H:MM:SS or MM:SS or M:SS or SS or S
  * @param {string} str
  * @returns {ValueOrError<number>}
  */
 export function parseTimeFromString(str) {
-  const [hours, minutes, seconds] = str.split(":").map(str => parseInt(str, 10));
+  let seconds = 0, minutes = 0, hours = 0;
+  const stringArray = str.split(":");
+
+  if (stringArray.length === 0) {
+    return [null, { code: "INVALID_TIME", message: "Time string is invalid" }]
+  }
+
+  if (stringArray.length === 1) {
+    seconds = parseInt(stringArray[0], 10)
+  } else if (stringArray.length === 2) {
+    minutes = parseInt(stringArray[0], 10)
+    seconds = parseInt(stringArray[1], 10)
+  } else if (stringArray.length === 3) {
+    hours = parseInt(stringArray[0], 10)
+    minutes = parseInt(stringArray[1], 10)
+    seconds = parseInt(stringArray[2], 10)
+  } else {
+    return [null, { code: "INVALID_TIME", message: "Time string is invalid" }]
+  }
 
   if ([hours, minutes, seconds].some(n => isNaN(n))) {
     return [null, { code: "INVALID_TIME", message: "Time string is invalid" }]

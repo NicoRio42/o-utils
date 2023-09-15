@@ -4,11 +4,14 @@ import { IOF_XML_3_SPLIT_TIMES } from "./mocks/iof-xml-3-split-times.js";
 import { parseIofXmlSplitTimesFile } from "../../../src/split-times/parsers/iof-xml-parser.js";
 import { Runner } from "../../../src/models/runner.js";
 import { DOMParser } from "linkedom";
+import { IOF_XML_2_SPLIT_TIMES_BIS } from "./mocks/iof-xml-2-split-times-bis.js";
+import { inspect } from "util";
 // import { inspect } from "util";
 
 describe("parseIofXmlSplitTimesFile()", () => {
+  const parser = new DOMParser();
+
   describe("Iof XML 2 file", () => {
-    const parser = new DOMParser();
     const xmlLinkeDomDoc2 = parser.parseFromString(
       IOF_XML_2_SPLIT_TIMES,
       "text/xml"
@@ -33,13 +36,36 @@ describe("parseIofXmlSplitTimesFile()", () => {
     // console.log(inspect(runners?.at(0), { depth: null }), splitsError);
   });
 
-  const parser = new DOMParser();
-  const xmlLinkeDomDoc3 = parser.parseFromString(
-    IOF_XML_3_SPLIT_TIMES,
-    "text/xml"
-  );
+  describe("Another Iof XML 2 file", () => {
+    const xmlLinkeDomDoc2 = parser.parseFromString(
+      IOF_XML_2_SPLIT_TIMES_BIS,
+      "text/xml"
+    );
+    // @ts-ignore
+    const xmlDoc2 = xmlLinkeDomDoc2 as XMLDocument;
+
+    const [runners, splitsError] = parseIofXmlSplitTimesFile(
+      xmlDoc2,
+      "Dames",
+      "+02:00",
+      "2022-03-11"
+    );
+
+    const firstRunner = runners?.at(0);
+    if (firstRunner) firstRunner.id = "1";
+
+    // test("expecte first runner to be strict equal.", () => {
+    //   expect(firstRunner).toStrictEqual(expectedOk2);
+    // });
+
+    console.log(inspect(runners?.at(0), { depth: null }), splitsError);
+  });
 
   describe("Iof XML 3 file", () => {
+    const xmlLinkeDomDoc3 = parser.parseFromString(
+      IOF_XML_3_SPLIT_TIMES,
+      "text/xml"
+    );
     // @ts-ignore
     const xmlDoc3 = xmlLinkeDomDoc3 as XMLDocument;
     const [runners, runnersError] = parseIofXmlSplitTimesFile(
