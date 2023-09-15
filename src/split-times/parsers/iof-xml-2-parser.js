@@ -152,6 +152,16 @@ function getRunners(personResults, date, timeZone) {
 
     const firstRunnerLegsLenth = runners[0].legs.length;
 
+    // Completing partial courses
+    runners.forEach(runner => {
+        const runnerLegsLength = runner.legs.length;
+        if (runnerLegsLength >= firstRunnerLegsLenth) return;
+
+        for (let i = 0; i < firstRunnerLegsLenth - runnerLegsLength; i++) {
+            runner.legs.push(null);
+        }
+    })
+
     if (runners.some((runner) => runner.legs.length !== firstRunnerLegsLenth)) {
         return [null, { code: "INCONSISTENT_RUNNERS_LEGS", message: "Not all runners have the same legs number in their course" }]
     }

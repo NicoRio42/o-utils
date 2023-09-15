@@ -46,7 +46,7 @@ describe("parseIofXmlSplitTimesFile()", () => {
 
     const [runners, splitsError] = parseIofXmlSplitTimesFile(
       xmlDoc2,
-      "Dames",
+      "Hommes",
       "+02:00",
       "2022-03-11"
     );
