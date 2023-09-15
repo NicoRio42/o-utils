@@ -87,7 +87,7 @@ function getRunners(personResults, date, timeZone) {
         const lastName = personResult.querySelector("Person PersonName Family")?.textContent ?? "";
         const firstName = personResult.querySelector("Person PersonName Given")?.textContent ?? "";
 
-        const startTimeTag = personResult.querySelector("Result StartTime Clock");
+        const startTimeTag = personResult.querySelector("Result StartTime");
         const [startTime, startTimeError] = computeStartOrFinishTime(startTimeTag, date, timeZone);
 
         if (startTimeError !== null) {
